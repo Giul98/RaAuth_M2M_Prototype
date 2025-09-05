@@ -1,0 +1,50 @@
+2025-09-05 15:18:14,713 - RAAuth - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:7000
+2025-09-05 15:18:14,713 - RAAuth - [33mPress CTRL+C to quit[0m
+2025-09-05 15:18:21,788 - RAAuth - Errore durante validazione: Audience doesn't match
+2025-09-05 15:18:21,788 - RAAuth - 127.0.0.1 - - [05/Sep/2025 15:18:21] "[31m[1mPOST /gateway HTTP/1.1[0m" 403 -
+2025-09-05 15:25:04,621 - RAAuth - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:7000
+2025-09-05 15:25:04,622 - RAAuth - [33mPress CTRL+C to quit[0m
+2025-09-05 15:25:08,202 - RAAuth - Token valido per sub=microA aud=125455 scope=read:data
+2025-09-05 15:25:08,211 - RAAuth - App non censita o servizio non trovato (AppId=000011, service=125455)
+2025-09-05 15:25:08,212 - RAAuth - 127.0.0.1 - - [05/Sep/2025 15:25:08] "[31m[1mPOST /gateway HTTP/1.1[0m" 403 -
+2025-09-05 15:38:24,407 - RAAuth - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:7000
+2025-09-05 15:38:24,407 - RAAuth - [33mPress CTRL+C to quit[0m
+2025-09-05 15:38:29,061 - RAAuth - Token valido per sub=microA aud=125455 scope=read:data
+2025-09-05 15:38:29,065 - RAAuth - App non censita o servizio non trovato (AppId=000011, service=125455)
+2025-09-05 15:38:29,065 - RAAuth - 127.0.0.1 - - [05/Sep/2025 15:38:29] "[31m[1mPOST /gateway HTTP/1.1[0m" 403 -
+2025-09-05 15:39:35,275 - RAAuth - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:7000
+2025-09-05 15:39:35,275 - RAAuth - [33mPress CTRL+C to quit[0m
+2025-09-05 15:39:38,331 - RAAuth - Token valido per sub=microA aud=125455 scope=read:data
+2025-09-05 15:39:38,335 - RAAuth - App non censita o servizio non trovato (AppId=000011, service=125455)
+2025-09-05 15:39:38,335 - RAAuth - 127.0.0.1 - - [05/Sep/2025 15:39:38] "[31m[1mPOST /gateway HTTP/1.1[0m" 403 -
+2025-09-05 15:39:55,575 - RAAuth - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:7000
+2025-09-05 15:39:55,575 - RAAuth - [33mPress CTRL+C to quit[0m
+2025-09-05 15:39:58,369 - RAAuth - Token valido per sub=microA aud=125455 scope=read:data
+2025-09-05 15:39:58,371 - RAAuth - App non censita o servizio non trovato (AppId=000011, service=125455)
+2025-09-05 15:39:58,371 - RAAuth - 127.0.0.1 - - [05/Sep/2025 15:39:58] "[31m[1mPOST /gateway HTTP/1.1[0m" 403 -
+2025-09-05 15:41:58,113 - RAAuth - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:7000
+2025-09-05 15:41:58,113 - RAAuth - [33mPress CTRL+C to quit[0m
+2025-09-05 15:42:02,256 - RAAuth - Token valido per sub=microA aud=125455 scope=read:data
+2025-09-05 15:42:02,281 - RAAuth - App non censita o servizio non trovato (AppId=000011, service=125455)
+2025-09-05 15:42:02,281 - RAAuth - 127.0.0.1 - - [05/Sep/2025 15:42:02] "[31m[1mPOST /gateway HTTP/1.1[0m" 403 -
+2025-09-05 15:42:51,917 - RAAuth - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:7000
+2025-09-05 15:42:51,917 - RAAuth - [33mPress CTRL+C to quit[0m
+2025-09-05 15:42:59,249 - RAAuth - Token valido per sub=microA aud=125455 scope=read:data
+2025-09-05 15:42:59,255 - RAAuth - App non censita o servizio non trovato (AppId=000011, service=125455)
+2025-09-05 15:42:59,256 - RAAuth - 127.0.0.1 - - [05/Sep/2025 15:42:59] "[31m[1mPOST /gateway HTTP/1.1[0m" 403 -
+2025-09-05 15:45:34,779 - RAAuth - Token valido per sub=microA aud=125455 scope=read:data
+2025-09-05 15:45:34,782 - RAAuth - App non censita o servizio non trovato (AppId=000011, service=125455)
+2025-09-05 15:45:34,782 - RAAuth - 127.0.0.1 - - [05/Sep/2025 15:45:34] "[31m[1mPOST /gateway HTTP/1.1[0m" 403 -
+2025-09-05 15:45:50,422 - RAAuth - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:7000
+2025-09-05 15:45:50,426 - RAAuth - [33mPress CTRL+C to quit[0m
+2025-09-05 15:45:53,729 - RAAuth - Token valido per sub=microA aud=125455 scope=read:data
+2025-09-05 15:45:53,753 - RAAuth - Accesso autorizzato: AppId=000011, service=125455, utenti=12
+2025-09-05 15:45:53,763 - RAAuth - 127.0.0.1 - - [05/Sep/2025 15:45:53] "POST /gateway HTTP/1.1" 200 -

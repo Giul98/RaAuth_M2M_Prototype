@@ -5,11 +5,11 @@ from cryptography.hazmat.backends import default_backend
 
 app = Flask(__name__)
 
-# Carica chiave privata per firmare i token
+# Chiave privata
 with open("private.pem", "r") as f:
     PRIVATE_KEY = f.read()
 
-# Carica chiave pubblica per JWKS
+# Chiave pubblica per JWKS
 with open("public.pem", "rb") as f:
     pub_key = serialization.load_pem_public_key(f.read(), backend=default_backend())
     numbers = pub_key.public_numbers()
@@ -17,21 +17,29 @@ with open("public.pem", "rb") as f:
     e = numbers.e
 
 def int_to_base64url(n):
-    """Converte un intero in stringa base64url, come richiesto da JWKS"""
     return jwt.utils.base64url_encode(n.to_bytes((n.bit_length() + 7) // 8, "big")).decode()
 
 @app.route("/token", methods=["POST"])
 def token():
+    """
+    Endpoint per ottenere un token.
+    Il client deve passare: client_id, client_secret, service (codServizio).
+    """
     data = request.json
     if data and data.get("client_id") == "microA" and data.get("client_secret") == "12345":
+        target_service = data.get("service")  # es. "125455"
+
+        if not target_service:
+            return jsonify({"error": "service (codServizio) mancante"}), 400
+
         payload = {
             "iss": "RAAuth",
             "sub": "microA",
-            "aud": "microB",
+            "aud": target_service,   # 👈 audience = codice servizio
             "scope": "read:data",
             "exp": datetime.datetime.now(datetime.UTC) + datetime.timedelta(minutes=5)
         }
-        # Firma con header che contiene il kid
+
         token = jwt.encode(
             payload,
             PRIVATE_KEY,
@@ -39,6 +47,7 @@ def token():
             headers={"kid": "raauth-key-1"}
         )
         return jsonify({"access_token": token})
+
     return jsonify({"error": "invalid_client"}), 401
 
 @app.route("/jwks.json")
