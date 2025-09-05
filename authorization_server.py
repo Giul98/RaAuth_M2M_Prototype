@@ -1,15 +1,15 @@
 from flask import Flask, request, jsonify
 import jwt, datetime
+from pymongo import MongoClient
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.backends import default_backend
 
 app = Flask(__name__)
 
-# Carica chiave privata per firmare i token
+# === Caricamento chiavi ===
 with open("private.pem", "r") as f:
     PRIVATE_KEY = f.read()
 
-# Carica chiave pubblica per JWKS
 with open("public.pem", "rb") as f:
     pub_key = serialization.load_pem_public_key(f.read(), backend=default_backend())
     numbers = pub_key.public_numbers()
@@ -17,8 +17,15 @@ with open("public.pem", "rb") as f:
     e = numbers.e
 
 def int_to_base64url(n):
-    """Converte un intero in stringa base64url, come richiesto da JWKS"""
-    return jwt.utils.base64url_encode(n.to_bytes((n.bit_length() + 7) // 8, "big")).decode()
+    """Converte un intero in base64url (per JWKS)."""
+    return jwt.utils.base64url_encode(
+        n.to_bytes((n.bit_length() + 7) // 8, "big")
+    ).decode()
+
+# === Connessione a MongoDB ===
+mongo_client = MongoClient("mongodb://localhost:27017/")
+db = mongo_client["raauth"]              # nome del DB
+services_collection = db["serviceRole"]  # collection dei servizi censiti
 
 @app.route("/token", methods=["POST"])
 def token():
@@ -27,22 +34,25 @@ def token():
     Il client deve passare: client_id, client_secret, scope (codServizio).
     """
     data = request.json
+
+    # ✅ autenticazione client (fittizia per la demo)
     if data and data.get("client_id") == "microA" and data.get("client_secret") == "12345":
         requested_scope = data.get("scope")  # es. "125455"
 
         if not requested_scope:
             return jsonify({"error": "scope mancante"}), 400
 
-        # 🔎 Qui potresti validare lo scope contro MongoDB o una lista statica
-        scope_validi = ["125455", "125456"]  # esempio
-        if requested_scope not in scope_validi:
+        # ✅ controllo in Mongo se il codServizio esiste
+        service_doc = services_collection.find_one({"codServizio": str(requested_scope).strip()})
+        if not service_doc:
             return jsonify({"error": "scope non autorizzato"}), 403
 
+        # ✅ se censito → creo il token
         payload = {
-            "iss": "RAAuth",
+            "iss": "adfs",                 # issuer = ADFS o altro server reale
             "sub": "microA",
-            "aud": requested_scope,    # audience = scope richiesto
-            "scope": requested_scope,  # claim scope
+            "aud": requested_scope,        # audience = codServizio richiesto
+            "scope": requested_scope,      # manteniamo anche il claim scope
             "exp": datetime.datetime.now(datetime.UTC) + datetime.timedelta(minutes=5)
         }
 
@@ -58,7 +68,7 @@ def token():
 
 @app.route("/jwks.json")
 def jwks():
-    """JWKS endpoint che espone la chiave pubblica"""
+    """JWKS endpoint che espone la chiave pubblica."""
     jwk = {
         "kty": "RSA",
         "use": "sig",

@@ -57,3 +57,26 @@
 2025-09-05 16:02:11,372 - RAAuth - Token valido per sub=microA aud=125455 scope=125455
 2025-09-05 16:02:11,396 - RAAuth - Accesso autorizzato: AppId=000009, service=125455, utenti=1341
 2025-09-05 16:02:11,405 - RAAuth - 127.0.0.1 - - [05/Sep/2025 16:02:11] "POST /gateway HTTP/1.1" 200 -
+2025-09-05 16:09:55,755 - RAAuth - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:7000
+2025-09-05 16:09:55,755 - RAAuth - [33mPress CTRL+C to quit[0m
+2025-09-05 16:09:59,566 - RAAuth - Token valido per sub=microA aud=125455 scope=125455
+2025-09-05 16:09:59,613 - RAAuth - Accesso autorizzato: AppId=000009, service=125455, utenti=1341
+2025-09-05 16:09:59,619 - RAAuth - 127.0.0.1 - - [05/Sep/2025 16:09:59] "POST /gateway HTTP/1.1" 200 -
+2025-09-05 16:10:59,622 - RAAuth - Token valido per sub=microA aud=125455 scope=125455
+2025-09-05 16:10:59,650 - RAAuth - Accesso autorizzato: AppId=000009, service=125455, utenti=1341
+2025-09-05 16:10:59,660 - RAAuth - 127.0.0.1 - - [05/Sep/2025 16:10:59] "POST /gateway HTTP/1.1" 200 -
+2025-09-05 16:12:11,467 - RAAuth - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:7000
+2025-09-05 16:12:11,467 - RAAuth - [33mPress CTRL+C to quit[0m
+2025-09-05 16:12:16,229 - RAAuth - Token valido per sub=microA aud=125455 scope=125455
+2025-09-05 16:12:16,236 - RAAuth - App non censita o servizio non trovato (AppId=000019, service=125455)
+2025-09-05 16:12:16,237 - RAAuth - 127.0.0.1 - - [05/Sep/2025 16:12:16] "[31m[1mPOST /gateway HTTP/1.1[0m" 403 -
+2025-09-05 16:15:48,551 - RAAuth - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:7000
+2025-09-05 16:15:48,551 - RAAuth - [33mPress CTRL+C to quit[0m
+2025-09-05 16:15:52,146 - RAAuth - Errore durante validazione: Audience doesn't match
+2025-09-05 16:15:52,146 - RAAuth - 127.0.0.1 - - [05/Sep/2025 16:15:52] "[31m[1mPOST /gateway HTTP/1.1[0m" 403 -
+2025-09-05 16:16:44,807 - RAAuth - Token valido per sub=microA aud=125457 scope=125457
+2025-09-05 16:16:44,818 - RAAuth - Accesso autorizzato: AppId=000019, service=125457, utenti=106
+2025-09-05 16:16:44,829 - RAAuth - 127.0.0.1 - - [05/Sep/2025 16:16:44] "POST /gateway HTTP/1.1" 200 -

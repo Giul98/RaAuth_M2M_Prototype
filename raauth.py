@@ -49,6 +49,12 @@ def gateway():
         )
         logging.info(f"Token valido per sub={decoded.get('sub')} aud={decoded.get('aud')} scope={decoded.get('scope')}")
 
+        # Controllo issuer (iss)
+        allowed_issuers = ["adfs", "spid", "cie"]
+        if decoded.get("iss") not in allowed_issuers:
+            logging.warning(f"Issuer non autorizzato: {decoded.get('iss')}")
+            return jsonify({"error": "issuer non autorizzato"}), 403
+
         appid_str = str(appid).strip()
         service_str = str(target_service).strip()
 

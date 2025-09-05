@@ -5,7 +5,7 @@ res = requests.post("http://127.0.0.1:5000/token",
     json={
         "client_id": "microA",
         "client_secret": "12345",
-        "scope": "125455"   # 👈 chiede accesso al servizio con codServizio=125455
+        "scope": "125457"   # chiede accesso al servizio con codServizio=125455
     }
 )
 
@@ -19,9 +19,9 @@ print("Token ottenuto:", token)
 # 2. Chiamata al gateway RAAuth
 headers = {
     "Authorization": f"Bearer {token}",
-    "AppId": "000009"  # deve corrispondere a un appCode censito in Mongo
+    "AppId": "000019"  # deve corrispondere a un appCode censito in Mongo
 }
-res2 = requests.post("http://127.0.0.1:7000/gateway", headers=headers, json={"service": "125455"})
+res2 = requests.post("http://127.0.0.1:7000/gateway", headers=headers, json={"service": "125457"})
 
 print("Risposta da RAAuth:")
 print(res2.json())
