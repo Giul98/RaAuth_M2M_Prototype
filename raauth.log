@@ -48,3 +48,12 @@
 2025-09-05 15:45:53,729 - RAAuth - Token valido per sub=microA aud=125455 scope=read:data
 2025-09-05 15:45:53,753 - RAAuth - Accesso autorizzato: AppId=000011, service=125455, utenti=12
 2025-09-05 15:45:53,763 - RAAuth - 127.0.0.1 - - [05/Sep/2025 15:45:53] "POST /gateway HTTP/1.1" 200 -
+2025-09-05 15:58:36,631 - RAAuth - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:7000
+2025-09-05 15:58:36,631 - RAAuth - [33mPress CTRL+C to quit[0m
+2025-09-05 15:58:40,205 - RAAuth - Token valido per sub=microA aud=125455 scope=125455
+2025-09-05 15:58:40,232 - RAAuth - Accesso autorizzato: AppId=000011, service=125455, utenti=12
+2025-09-05 15:58:40,236 - RAAuth - 127.0.0.1 - - [05/Sep/2025 15:58:40] "POST /gateway HTTP/1.1" 200 -
+2025-09-05 16:02:11,372 - RAAuth - Token valido per sub=microA aud=125455 scope=125455
+2025-09-05 16:02:11,396 - RAAuth - Accesso autorizzato: AppId=000009, service=125455, utenti=1341
+2025-09-05 16:02:11,405 - RAAuth - 127.0.0.1 - - [05/Sep/2025 16:02:11] "POST /gateway HTTP/1.1" 200 -

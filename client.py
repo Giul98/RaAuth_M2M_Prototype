@@ -1,20 +1,27 @@
 import requests
 
-# 1. Richiesta token con service target (codServizio)
+# 1. Richiesta token dall'Authorization Server
 res = requests.post("http://127.0.0.1:5000/token",
     json={
         "client_id": "microA",
         "client_secret": "12345",
-        "service": "125455"   # qui il codServizio
+        "scope": "125455"   # 👈 chiede accesso al servizio con codServizio=125455
     }
 )
+
+if res.status_code != 200:
+    print("Errore nella richiesta del token:", res.status_code, res.text)
+    exit(1)
+
 token = res.json().get("access_token")
 print("Token ottenuto:", token)
 
-# 2. Chiamata a RAAuth
+# 2. Chiamata al gateway RAAuth
 headers = {
     "Authorization": f"Bearer {token}",
-    "AppId": "000011"
+    "AppId": "000009"  # deve corrispondere a un appCode censito in Mongo
 }
 res2 = requests.post("http://127.0.0.1:7000/gateway", headers=headers, json={"service": "125455"})
+
+print("Risposta da RAAuth:")
 print(res2.json())
