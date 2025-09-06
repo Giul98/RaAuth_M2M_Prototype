@@ -23,7 +23,7 @@ db = mongo_client["raauth"]             # come in Compass
 services_collection = db["serviceRole"] # servizi censiti (codServizio, appCode, utenti, ruoli...)
 clients_collection  = db["clients"]     # profilo dei client M2M (permessi)
 
-# === Logging ===
+#Logging
 logging.basicConfig(
     filename="raauth.log",
     level=logging.INFO,
@@ -32,13 +32,7 @@ logging.basicConfig(
 
 @app.route("/gateway", methods=["POST"])
 def gateway():
-    """
-    Headers:
-      - Authorization: Bearer <JWT>
-      - (opz.) AppId: <appCode>  [solo per debug/cross-check]
-    Body:
-      - { "service": "<codServizio>", "action": "<read|write|...>" }
-    """
+
     # --- input ---
     auth_header = request.headers.get("Authorization", "")
     header_appid = request.headers.get("AppId")  # opzionale (debug)
@@ -93,7 +87,7 @@ def gateway():
             return jsonify({"error": "azione non consentita per questo client su questo servizio"}), 403
 
         # 5) Verifica censimento su serviceRole (appCode + codServizio) e utenti abilitati
-        app_code = client_doc.get("appCode")                          # NEW: ricava appCode dal profilo client
+        app_code = client_doc.get("appCode")                          # ricava appCode dal profilo client
         app_doc = services_collection.find_one({
             "appCode": app_code,
             "codServizio": target_service
@@ -117,7 +111,7 @@ def gateway():
             forward_payload = {
                 "claims": decoded,
                 "action": action,
-                "appCode": app_code             # NEW: passa appCode al RS
+                "appCode": app_code             # passa appCode al RS
             }
             logging.info(f"Forward RS: {forward_payload['action']} appCode={app_code} service={target_service}")
             forward_resp = requests.post(RESOURCE_SERVER_URL, json=forward_payload, timeout=5)

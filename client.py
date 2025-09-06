@@ -1,6 +1,6 @@
 import requests
 
-scope = "125457"   # servizio
+scope = "125457"   # servizio di destinazione
 action = "read"    # azione concessa in clients.allowed_actions[scope]
 client_id = "microA"
 

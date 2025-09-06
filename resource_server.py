@@ -21,7 +21,7 @@ def protected_data():
     print(f"DEBUG RS - appCode={app_code}, codServizio={service_code}, action={action}")
 
     if action == "read":
-        # 🔎 usa **entrambi** i campi
+        # 🔎 usa entrambi i campi
         service_doc = services_collection.find_one({
             "appCode": app_code,
             "codServizio": service_code
