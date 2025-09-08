@@ -19,29 +19,51 @@ jwk_client = PyJWKClient(JWKS_URL)
 
 # === Mongo ===
 mongo_client = MongoClient("mongodb://localhost:27017/")
-db = mongo_client["raauth"]             # come in Compass
-services_collection = db["serviceRole"] # servizi censiti (codServizio, appCode, utenti, ruoli...)
-clients_collection  = db["clients"]     # profilo dei client M2M (permessi)
+db = mongo_client["raauth"]              # come in Compass
+services_collection = db["serviceRole"]  # censimento servizi (appCode, codServizio, utenti...)
+clients_collection  = db["clients"]      # profilo dei client M2M (permessi, appCode, issuer)
 
-#Logging
+# === Logging ===
 logging.basicConfig(
     filename="raauth.log",
     level=logging.INFO,
     format="%(asctime)s - RAAuth - %(message)s"
 )
 
+# === Safelist parametri per action ===
+ALLOWED_PARAM_KEYS = {
+    "read": ["page","size","q","sort"],
+    "search": ["page","size","q","sort"],
+    "get_user": ["cf"],
+    "disable_user": ["cf"],
+    "enable_user": ["cf"],              # <-- aggiunta
+    "assign_role": ["cf","role_code","role_desc"],
+    "remove_role": ["cf","role_code","role_desc"],
+    "export_users": ["q","sort"],
+}
+
 @app.route("/gateway", methods=["POST"])
 def gateway():
+    """
+    Richiesta dal client:
+      - Header: Authorization: Bearer <JWT>
+      - Body:   { "service": "<codServizio>", "action": "<read|search|get_user|...>", ...params }
 
+    Flusso:
+      1) Verifica firma token via JWKS + audience == service
+      2) Verifica issuer (iss)
+      3) Carica profilo client (sub) da 'clients' e verifica scope & action
+      4) Verifica censimento su 'serviceRole' (appCode + codServizio) e utenti abilitati
+      5) Safelist dei parametri per l'azione e forward al Resource Server
+    """
     # --- input ---
     auth_header = request.headers.get("Authorization", "")
-    header_appid = request.headers.get("AppId")  # opzionale (debug)
     body = request.get_json(silent=True) or {}
     target_service = str(body.get("service", "")).strip()
     action = str(body.get("action", "")).strip()
 
     if not auth_header or not target_service or not action:
-        logging.warning(f"Richiesta rifiutata: dati mancanti (AppId={header_appid}, service={target_service}, action={action})")
+        logging.warning(f"Richiesta rifiutata: dati mancanti (service={target_service}, action={action})")
         return jsonify({"error": "Dati mancanti"}), 400
     if not auth_header.startswith("Bearer "):
         return jsonify({"error": "Formato Authorization non valido"}), 400
@@ -71,23 +93,29 @@ def gateway():
             logging.warning(f"Client non censito o disabilitato: {client_id}")
             return jsonify({"error": "client non censito o disabilitato"}), 403
 
-        # (Opz.) cross-check AppId header con appCode censito per il client
-        if header_appid and header_appid != client_doc.get("appCode"):
-            logging.warning(f"AppId non coerente (header={header_appid} != clients.appCode={client_doc.get('appCode')})")
-            return jsonify({"error": "AppId non coerente con il client"}), 403
+        # issuer previsto dal profilo client (opzionale)
+        expected_issuer = client_doc.get("issuer")
+        if expected_issuer and decoded.get("iss") != expected_issuer:
+            logging.warning(f"Issuer non coerente per client={client_id}: got={decoded.get('iss')} expected={expected_issuer}")
+            return jsonify({"error": "issuer non coerente per il client"}), 403
 
-        # 4) Autorizzazione service/scope & action
+        # scope/svc autorizzato per il client?
         if target_service not in client_doc.get("allowed_scopes", []):
             logging.warning(f"Scope non consentito per client={client_id}: {target_service}")
             return jsonify({"error": "scope non consentito per questo client"}), 403
 
+        # action autorizzata su quello scope?
         allowed_actions = client_doc.get("allowed_actions", {}).get(target_service, [])
         if action not in allowed_actions:
             logging.warning(f"Azione non consentita per client={client_id} su service={target_service}: {action}")
             return jsonify({"error": "azione non consentita per questo client su questo servizio"}), 403
 
-        # 5) Verifica censimento su serviceRole (appCode + codServizio) e utenti abilitati
-        app_code = client_doc.get("appCode")                          # ricava appCode dal profilo client
+        # 4) Verifica censimento su serviceRole (appCode + codServizio) e utenti abilitati
+        app_code = client_doc.get("appCode")
+        if not app_code:
+            logging.warning(f"Profilo client privo di appCode: client={client_id}")
+            return jsonify({"error": "profilo client non valido (appCode mancante)"}), 500
+
         app_doc = services_collection.find_one({
             "appCode": app_code,
             "codServizio": target_service
@@ -106,21 +134,34 @@ def gateway():
 
         logging.info(f"Accesso autorizzato: client={client_id} appCode={app_code} service={target_service} action={action} utenti_validi={len(utenti_validi)}")
 
-        # 6) Forward al Resource Server (claims + action + appCode)
+        # 5) Safelist parametri per action + forward al Resource Server
+        params = {}
+        for k in ALLOWED_PARAM_KEYS.get(action, []):
+            if k in body:
+                params[k] = body[k]
+
+        forward_payload = {
+            "claims": decoded,
+            "action": action,
+            "appCode": app_code,
+            "params": params
+        }
+        logging.info(f"Forward RS: action={action} appCode={app_code} service={target_service} params={list(params.keys())}")
+
         try:
-            forward_payload = {
-                "claims": decoded,
-                "action": action,
-                "appCode": app_code             # passa appCode al RS
-            }
-            logging.info(f"Forward RS: {forward_payload['action']} appCode={app_code} service={target_service}")
-            forward_resp = requests.post(RESOURCE_SERVER_URL, json=forward_payload, timeout=5)
+            forward_resp = requests.post(RESOURCE_SERVER_URL, json=forward_payload, timeout=8)
+            # Prova a restituire JSON; fallback a testo grezzo
+            try:
+                resp_json = forward_resp.json()
+            except ValueError:
+                resp_json = {"raw": forward_resp.text}
 
             return jsonify({
                 "gateway": "RAAuth",
                 "validated_claims": decoded,
-                "resource_response": forward_resp.json()
+                "resource_response": resp_json
             }), forward_resp.status_code
+
         except RequestException as re:
             logging.error(f"Errore contattando il Resource Server: {re}")
             return jsonify({"error": "Resource Server non raggiungibile"}), 502
