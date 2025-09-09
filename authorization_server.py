@@ -21,7 +21,7 @@ def int_to_base64url(n_int: int) -> str:
         n_int.to_bytes((n_int.bit_length() + 7) // 8, "big")
     ).decode()
 
-# Mongo: verifica che lo scope richiesto (codServizio) esista
+# === Mongo: verifica che lo scope richiesto (codServizio) esista ===
 mongo_client = MongoClient("mongodb://localhost:27017/")
 db = mongo_client["raauth"]
 services_collection = db["serviceRole"]
