@@ -117,8 +117,12 @@ def gateway():
             forward_payload = {
                 "claims": decoded,
                 "action": action,
-                "appCode": app_code             # NEW: passa appCode al RS
+                "appCode": app_code,
+                "data": body.get("data"),
+                "field": body.get("field"),
+                "array": body.get("array")
             }
+
             logging.info(f"Forward RS: {forward_payload['action']} appCode={app_code} service={target_service}")
             forward_resp = requests.post(RESOURCE_SERVER_URL, json=forward_payload, timeout=5)
 

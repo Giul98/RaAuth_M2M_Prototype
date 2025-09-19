@@ -30,7 +30,12 @@ clients_collection = db["clients"]   # 👈 nuova collection
 @app.route("/token", methods=["POST"])
 def token():
     data = request.json or {}
-    if data.get("client_id") != "microA" or data.get("client_secret") != "12345":
+    client_doc = clients_collection.find_one({
+        "client_id": data.get("client_id"),
+        "client_secret": data.get("client_secret"),
+        "enabled": True
+    })
+    if not client_doc:
         return jsonify({"error": "invalid_client"}), 401
 
     requested_scope = str(data.get("scope", "")).strip()
