@@ -12,7 +12,7 @@ app = Flask(__name__)
 # === Config ===
 JWKS_URL = "http://127.0.0.1:5000/jwks.json"   # JWKS dell'Authorization Server
 RESOURCE_SERVER_URL = "http://127.0.0.1:6000/data"
-ALLOWED_ISSUERS = ["adfs", "spid", "cie"]      # issuer fidati
+ALLOWED_ISSUERS = ["adfs"]      # issuer fidati
 
 # === JWKS client ===
 jwk_client = PyJWKClient(JWKS_URL)
