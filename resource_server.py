@@ -9,7 +9,7 @@ db = mongo_client["raauth"]
 services_collection = db["serviceRole"]
 
 def clean_mongo_doc(doc):
-    """Converte ObjectId in stringhe per renderlo JSON serializzabile"""
+    #Converte ObjectId in stringhe per renderlo JSON serializzabile
     if not doc:
         return doc
     doc = dict(doc)
@@ -40,15 +40,21 @@ def get_nested_value(doc, path):
 
 @app.route("/data", methods=["POST"])
 def protected_data():
+    # Estrae il corpo della richiesta in formato JSON
     body = request.get_json(silent=True) or {}
+    # Claims contenuti nel token JWT già validato da RAAuth
     claims = body.get("claims", {})
+    # Tipo di azione richiesta (read, update, add...)
     action = body.get("action")
+    # Identificativi del servizio censito
     app_code = str(body.get("appCode", "")).strip()
-    service_code = str(claims.get("aud", "")).strip()
+    service_code = str(claims.get("aud", "")).strip()  # "aud" nel token rappresenta il codServizio
+    # Parametri aggiuntivi per le azioni
     data = body.get("data") or {}
-    field = body.get("field")
-    array = body.get("array")
+    field = body.get("field")    # campo specifico da leggere (es. "descrizioneApp")
+    array = body.get("array")    # array su cui operare (es. "utenti", "services")
 
+    # Controllo preliminare: senza action, appCode o codServizio non si può proseguire
     if not action or not app_code or not service_code:
         return jsonify({"error": "Parametri mancanti"}), 400
 
@@ -56,10 +62,12 @@ def protected_data():
         "appCode": app_code,
         "codServizio": service_code
     })
+
+    # Se il servizio non è censito in DB: errore
     if not service_doc:
         return jsonify({"error": f"Servizio {service_code} per appCode {app_code} non trovato"}), 404
 
-    # === ACTIONS ===
+    # ACTIONS
     if action == "read":
         if field:
             value = get_nested_value(service_doc, field)

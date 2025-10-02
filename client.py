@@ -19,7 +19,7 @@ token = res.json()["access_token"]
 print("Il Token ricevuto è:", token);
 
 headers = {"Authorization": f"Bearer {token}"}
-"""
+
 #2) LETTURA INTERO SERVIZIO
 res2 = requests.post("http://127.0.0.1:7000/gateway", headers=headers, json={
     "service": scope,
@@ -29,7 +29,7 @@ res2 = requests.post("http://127.0.0.1:7000/gateway", headers=headers, json={
 print("READ:")
 pprint(res2.json())
 
-"""
+
 # 3) AGGIORNAMENTO (Anche per aggiungere elementi si fa con update)
 res3 = requests.post("http://127.0.0.1:7000/gateway", headers=headers, json={
     "service": scope,
@@ -39,7 +39,7 @@ res3 = requests.post("http://127.0.0.1:7000/gateway", headers=headers, json={
 print("UPDATE:")
 pprint(res3.json())
 
-"""
+
 # 4) AGGIUNTA ELEMENTO AD ARRAY
 res4 = requests.post("http://127.0.0.1:7000/gateway", headers=headers, json={
     "service": scope,
@@ -49,4 +49,3 @@ res4 = requests.post("http://127.0.0.1:7000/gateway", headers=headers, json={
 })
 print("ADD:")
 pprint(res4.json())
-"""

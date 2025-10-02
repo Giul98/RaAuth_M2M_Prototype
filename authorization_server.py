@@ -21,11 +21,11 @@ def int_to_base64url(n_int: int) -> str:
         n_int.to_bytes((n_int.bit_length() + 7) // 8, "big")
     ).decode()
 
-# === Mongo: verifica che lo scope richiesto (codServizio) esista ===
+# Mongo: verifica che lo scope richiesto (codServizio) esista
 mongo_client = MongoClient("mongodb://localhost:27017/")
 db = mongo_client["raauth"]
 services_collection = db["serviceRole"]
-clients_collection = db["clients"]   # 👈 nuova collection
+clients_collection = db["clients"]   # collection
 
 @app.route("/token", methods=["POST"])
 def token():
@@ -54,7 +54,7 @@ def token():
     if requested_scope not in client_doc.get("allowed_scopes", []):
         return jsonify({"error": "scope non consentito per questo client"}), 403
 
-    # (opz.) prendo issuer configurato per quel client
+    # prendo issuer configurato per quel client
     issuer = client_doc.get("issuer", "adfs")
 
     payload = {
@@ -75,7 +75,7 @@ def token():
 
 @app.route("/jwks.json")
 def jwks():
-    """Espone la chiave pubblica in formato JWKS."""
+    #Espone la chiave pubblica in formato JWKS.
     jwk = {
         "kty": "RSA",
         "use": "sig",

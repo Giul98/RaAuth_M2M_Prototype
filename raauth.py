@@ -9,21 +9,21 @@ from requests.exceptions import RequestException
 
 app = Flask(__name__)
 
-# === Config ===
+# Config
 JWKS_URL = "http://127.0.0.1:5000/jwks.json"   # JWKS dell'Authorization Server
 RESOURCE_SERVER_URL = "http://127.0.0.1:6000/data"
-ALLOWED_ISSUERS = ["adfs"]      # issuer fidati
+ALLOWED_ISSUERS = ["adfs"]      # issuer fidati (solo adfs)
 
-# === JWKS client ===
+# JWKS client
 jwk_client = PyJWKClient(JWKS_URL)
 
-# === Mongo ===
+# Mongo
 mongo_client = MongoClient("mongodb://localhost:27017/")
 db = mongo_client["raauth"]             # come in Compass
 services_collection = db["serviceRole"] # servizi censiti (codServizio, appCode, utenti, ruoli...)
 clients_collection  = db["clients"]     # profilo dei client M2M (permessi)
 
-# === Logging ===
+# Logging
 logging.basicConfig(
     filename="raauth.log",
     level=logging.INFO,
@@ -35,13 +35,13 @@ def gateway():
     """
     Headers:
       - Authorization: Bearer <JWT>
-      - (opz.) AppId: <appCode>  [solo per debug/cross-check]
+      - AppId: <appCode>
     Body:
       - { "service": "<codServizio>", "action": "<read|write|...>" }
     """
-    # --- input ---
+    # input
     auth_header = request.headers.get("Authorization", "")
-    header_appid = request.headers.get("AppId")  # opzionale (debug)
+    header_appid = request.headers.get("AppId")
     body = request.get_json(silent=True) or {}
     target_service = str(body.get("service", "")).strip()
     action = str(body.get("action", "")).strip()
@@ -77,7 +77,10 @@ def gateway():
             logging.warning(f"Client non censito o disabilitato: {client_id}")
             return jsonify({"error": "client non censito o disabilitato"}), 403
 
-        # (Opz.) cross-check AppId header con appCode censito per il client
+        # Verifica di coerenza tra AppId passato dal client e l'appCode registrato
+        # Serve come ulteriore sicurezza: se l'header "AppId" è presente,
+        # deve corrispondere all'appCode associato al client in MongoDB.
+        # In caso di mismatch, la richiesta viene rifiutata.
         if header_appid and header_appid != client_doc.get("appCode"):
             logging.warning(f"AppId non coerente (header={header_appid} != clients.appCode={client_doc.get('appCode')})")
             return jsonify({"error": "AppId non coerente con il client"}), 403
@@ -93,7 +96,7 @@ def gateway():
             return jsonify({"error": "azione non consentita per questo client su questo servizio"}), 403
 
         # 5) Verifica censimento su serviceRole (appCode + codServizio) e utenti abilitati
-        app_code = client_doc.get("appCode")                          # NEW: ricava appCode dal profilo client
+        app_code = client_doc.get("appCode")                          # ricava appCode dal profilo client
         app_doc = services_collection.find_one({
             "appCode": app_code,
             "codServizio": target_service
