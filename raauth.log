@@ -394,3 +394,83 @@
 2025-09-15 16:49:02,119 - RAAuth - Accesso autorizzato: client=microD appCode=000021 service=125459 action=update utenti_validi=3
 2025-09-15 16:49:02,119 - RAAuth - Forward RS: update appCode=000021 service=125459
 2025-09-15 16:49:02,145 - RAAuth - 127.0.0.1 - - [15/Sep/2025 16:49:02] "POST /gateway HTTP/1.1" 200 -
+2025-11-19 14:51:59,902 - RAAuth - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:7000
+2025-11-19 14:51:59,902 - RAAuth - [33mPress CTRL+C to quit[0m
+2025-11-19 14:52:05,487 - RAAuth - Token valido: sub=microD iss=adfs aud=125459 scope=125459
+2025-11-19 14:52:05,490 - RAAuth - Accesso autorizzato: client=microD appCode=000021 service=125459 action=read utenti_validi=3
+2025-11-19 14:52:05,490 - RAAuth - Forward RS: read appCode=000021 service=125459
+2025-11-19 14:52:05,494 - RAAuth - 127.0.0.1 - - [19/Nov/2025 14:52:05] "POST /gateway HTTP/1.1" 200 -
+2025-11-19 14:52:05,496 - RAAuth - Token valido: sub=microD iss=adfs aud=125459 scope=125459
+2025-11-19 14:52:05,497 - RAAuth - Accesso autorizzato: client=microD appCode=000021 service=125459 action=update utenti_validi=3
+2025-11-19 14:52:05,497 - RAAuth - Forward RS: update appCode=000021 service=125459
+2025-11-19 14:52:05,504 - RAAuth - 127.0.0.1 - - [19/Nov/2025 14:52:05] "POST /gateway HTTP/1.1" 200 -
+2025-11-19 14:52:05,505 - RAAuth - Token valido: sub=microD iss=adfs aud=125459 scope=125459
+2025-11-19 14:52:05,506 - RAAuth - Azione non consentita per client=microD su service=125459: add
+2025-11-19 14:52:05,506 - RAAuth - 127.0.0.1 - - [19/Nov/2025 14:52:05] "[31m[1mPOST /gateway HTTP/1.1[0m" 403 -
+2025-12-03 17:54:39,166 - RAAuth - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:7000
+2025-12-03 17:54:39,167 - RAAuth - [33mPress CTRL+C to quit[0m
+2025-12-03 17:54:44,365 - RAAuth - Error during validation: Invalid audience
+2025-12-03 17:54:44,366 - RAAuth - 127.0.0.1 - - [03/Dec/2025 17:54:44] "[31m[1mPOST /gateway HTTP/1.1[0m" 403 -
+2025-12-03 17:54:44,367 - RAAuth - Error during validation: Invalid audience
+2025-12-03 17:54:44,367 - RAAuth - 127.0.0.1 - - [03/Dec/2025 17:54:44] "[31m[1mPOST /gateway HTTP/1.1[0m" 403 -
+2025-12-03 17:54:44,369 - RAAuth - Error during validation: Invalid audience
+2025-12-03 17:54:44,369 - RAAuth - 127.0.0.1 - - [03/Dec/2025 17:54:44] "[31m[1mPOST /gateway HTTP/1.1[0m" 403 -
+2025-12-03 18:04:08,694 - RAAuth - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:7000
+2025-12-03 18:04:08,694 - RAAuth - [33mPress CTRL+C to quit[0m
+2025-12-03 18:04:11,638 - RAAuth - Token validated: sub=microD iss=adfs aud=https://microD.regione.abruzzo.it
+2025-12-03 18:04:11,641 - RAAuth - Authorized access: client=microD, service=125459, action=read
+2025-12-03 18:04:11,645 - RAAuth - 127.0.0.1 - - [03/Dec/2025 18:04:11] "[33mPOST /gateway HTTP/1.1[0m" 404 -
+2025-12-03 18:04:11,647 - RAAuth - Token validated: sub=microD iss=adfs aud=https://microD.regione.abruzzo.it
+2025-12-03 18:04:11,647 - RAAuth - Authorized access: client=microD, service=125459, action=update
+2025-12-03 18:04:11,649 - RAAuth - 127.0.0.1 - - [03/Dec/2025 18:04:11] "[33mPOST /gateway HTTP/1.1[0m" 404 -
+2025-12-03 18:04:11,650 - RAAuth - Token validated: sub=microD iss=adfs aud=https://microD.regione.abruzzo.it
+2025-12-03 18:04:11,651 - RAAuth - Action not authorized for client=microD on service=125459: add
+2025-12-03 18:04:11,651 - RAAuth - 127.0.0.1 - - [03/Dec/2025 18:04:11] "[31m[1mPOST /gateway HTTP/1.1[0m" 403 -
+2025-12-03 18:13:21,694 - RAAuth - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:7000
+2025-12-03 18:13:21,694 - RAAuth - [33mPress CTRL+C to quit[0m
+2025-12-03 18:13:27,141 - RAAuth - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:7000
+2025-12-03 18:13:27,141 - RAAuth - [33mPress CTRL+C to quit[0m
+2025-12-03 18:13:30,601 - RAAuth - Token validated: sub=microD iss=adfs aud=https://microD.regione.abruzzo.it
+2025-12-03 18:13:30,605 - RAAuth - Authorized access: client=microD, service=125459, action=read
+2025-12-03 18:13:30,618 - RAAuth - 127.0.0.1 - - [03/Dec/2025 18:13:30] "[33mPOST /gateway HTTP/1.1[0m" 404 -
+2025-12-03 18:13:30,620 - RAAuth - Token validated: sub=microD iss=adfs aud=https://microD.regione.abruzzo.it
+2025-12-03 18:13:30,620 - RAAuth - Authorized access: client=microD, service=125459, action=update
+2025-12-03 18:13:30,622 - RAAuth - 127.0.0.1 - - [03/Dec/2025 18:13:30] "[33mPOST /gateway HTTP/1.1[0m" 404 -
+2025-12-03 18:13:30,624 - RAAuth - Token validated: sub=microD iss=adfs aud=https://microD.regione.abruzzo.it
+2025-12-03 18:13:30,624 - RAAuth - Action not authorized for client=microD on service=125459: add
+2025-12-03 18:13:30,624 - RAAuth - 127.0.0.1 - - [03/Dec/2025 18:13:30] "[31m[1mPOST /gateway HTTP/1.1[0m" 403 -
+2025-12-03 18:15:05,758 - RAAuth - Token validated: sub=microD iss=adfs aud=https://microD.regione.abruzzo.it
+2025-12-03 18:15:05,760 - RAAuth - Authorized access: client=microD, service=125459, action=read
+2025-12-03 18:15:05,769 - RAAuth - 127.0.0.1 - - [03/Dec/2025 18:15:05] "[33mPOST /gateway HTTP/1.1[0m" 404 -
+2025-12-03 18:15:05,771 - RAAuth - Token validated: sub=microD iss=adfs aud=https://microD.regione.abruzzo.it
+2025-12-03 18:15:05,772 - RAAuth - Authorized access: client=microD, service=125459, action=update
+2025-12-03 18:15:05,774 - RAAuth - 127.0.0.1 - - [03/Dec/2025 18:15:05] "[33mPOST /gateway HTTP/1.1[0m" 404 -
+2025-12-03 18:15:05,775 - RAAuth - Token validated: sub=microD iss=adfs aud=https://microD.regione.abruzzo.it
+2025-12-03 18:15:05,776 - RAAuth - Action not authorized for client=microD on service=125459: add
+2025-12-03 18:15:05,776 - RAAuth - 127.0.0.1 - - [03/Dec/2025 18:15:05] "[31m[1mPOST /gateway HTTP/1.1[0m" 403 -
+2025-12-03 18:16:07,574 - RAAuth - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:7000
+2025-12-03 18:16:07,574 - RAAuth - [33mPress CTRL+C to quit[0m
+2025-12-03 18:16:10,610 - RAAuth - Token validated: sub=microD iss=adfs aud=https://microD.regione.abruzzo.it
+2025-12-03 18:16:10,613 - RAAuth - Authorized access: client=microD, service=125459, action=read
+2025-12-03 18:16:10,617 - RAAuth - 127.0.0.1 - - [03/Dec/2025 18:16:10] "POST /gateway HTTP/1.1" 200 -
+2025-12-03 18:16:10,619 - RAAuth - Token validated: sub=microD iss=adfs aud=https://microD.regione.abruzzo.it
+2025-12-03 18:16:10,620 - RAAuth - Authorized access: client=microD, service=125459, action=update
+2025-12-03 18:16:10,637 - RAAuth - 127.0.0.1 - - [03/Dec/2025 18:16:10] "POST /gateway HTTP/1.1" 200 -
+2025-12-03 18:16:10,639 - RAAuth - Token validated: sub=microD iss=adfs aud=https://microD.regione.abruzzo.it
+2025-12-03 18:16:10,639 - RAAuth - Action not authorized for client=microD on service=125459: add
+2025-12-03 18:16:10,639 - RAAuth - 127.0.0.1 - - [03/Dec/2025 18:16:10] "[31m[1mPOST /gateway HTTP/1.1[0m" 403 -
+2025-12-03 18:22:19,690 - RAAuth - Token validated: sub=microD iss=adfs aud=https://microD.regione.abruzzo.it
+2025-12-03 18:22:19,695 - RAAuth - Authorized access: client=microD, service=125459, action=read
+2025-12-03 18:22:19,701 - RAAuth - 127.0.0.1 - - [03/Dec/2025 18:22:19] "POST /gateway HTTP/1.1" 200 -
+2025-12-03 18:22:19,702 - RAAuth - Token validated: sub=microD iss=adfs aud=https://microD.regione.abruzzo.it
+2025-12-03 18:22:19,703 - RAAuth - Authorized access: client=microD, service=125459, action=update
+2025-12-03 18:22:19,712 - RAAuth - 127.0.0.1 - - [03/Dec/2025 18:22:19] "POST /gateway HTTP/1.1" 200 -
+2025-12-03 18:22:19,713 - RAAuth - Token validated: sub=microD iss=adfs aud=https://microD.regione.abruzzo.it
+2025-12-03 18:22:19,714 - RAAuth - Action not authorized for client=microD on service=125459: add
+2025-12-03 18:22:19,714 - RAAuth - 127.0.0.1 - - [03/Dec/2025 18:22:19] "[31m[1mPOST /gateway HTTP/1.1[0m" 403 -
